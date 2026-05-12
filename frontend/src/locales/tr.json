@@ -1,0 +1,78 @@
+{
+  "app_title": "Şap Hastalığı AI Teşhis Sistemi",
+  "app_subtitle": "Yapay Zeka Destekli Sığır Lezyon Tespiti",
+  "hero_description": "Bu sistem, sığırlarda Şap Hastalığı (FMD) belirtilerini yapay zeka ile analiz eder. Ağız, tırnak ve baş bölgelerindeki lezyonları otomatik olarak tespit eder ve veteriner hekimlere karar desteği sağlar.",
+  "hero_target": "Veteriner hekimler ve çiftçiler için tasarlanmıştır.",
+  
+  "upload_title": "Görsel Yükle",
+  "upload_drag": "Görseli sürükleyip bırakın veya tıklayarak seçin",
+  "upload_formats": "Desteklenen formatlar: JPG, JPEG, PNG (Maks. 10MB)",
+  "camera_title": "Kamera ile Çek",
+  "camera_start": "Kamerayı Aç",
+  "camera_capture": "Fotoğraf Çek",
+  "camera_retake": "Yeniden Çek",
+  "camera_use": "Bu Fotoğrafı Kullan",
+  "camera_stop": "Kamerayı Kapat",
+  
+  "analyze_button": "Analizi Başlat",
+  "analyzing": "Analiz yapılıyor...",
+  "analyzing_subtitle": "Yapay zeka görseli inceliyor, lütfen bekleyin...",
+  
+  "results_title": "Sonuçlar",
+  "active_model": "Aktif Model",
+  "inference_time": "Çıkarım Süresi (Gecikme)",
+  "original_image": "Orijinal Görsel",
+  "annotated_image": "İşaretlenmiş Görsel",
+  "findings_title": "Tespit Edilen Bulgular",
+  "confidence_score": "Güven Skoru",
+  "no_findings": "Bulgu tespit edilemedi",
+  "class_label": "Sınıf",
+  "count_label": "Adet",
+  "total_label": "Toplam",
+  "position_label": "Konum",
+  
+  "summary_title": "Özet Değerlendirme",
+  "interpretation_warning": "Şüpheli Bulgu Tespit Edildi",
+  "interpretation_healthy": "Şüpheli Bulgu Tespit Edilmedi",
+  "interpretation_inconclusive": "Sonuç Belirlenemedi",
+  
+  "download_image": "İşaretlenmiş Görseli İndir",
+  "download_json": "JSON Raporu İndir",
+  "download_pdf": "PDF Raporu İndir",
+  
+  "new_analysis": "Yeni Analiz",
+  "history_title": "Analiz Geçmişi",
+  "history_empty": "Henüz analiz yapılmadı",
+  "history_item": "Analiz",
+  
+  "demo_title": "Örnek Görsellerle Dene",
+  "demo_description": "Sistemi test etmek için örnek görsellerden birini seçin.",
+  
+  "caution_text": "⚠ UYARI: Bu sistem yalnızca karar destek amaçlıdır. Kesin tanı için veteriner hekim değerlendirmesi gereklidir.",
+  
+  "error_upload": "Dosya yüklenirken bir hata oluştu.",
+  "error_inference": "Analiz sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+  "error_network": "Sunucu ile bağlantı kurulamadı. Lütfen bağlantınızı kontrol edin.",
+  "error_file_type": "Desteklenmeyen dosya türü. Lütfen JPG, JPEG veya PNG dosyası yükleyin.",
+  "error_file_size": "Dosya boyutu çok büyük. Maksimum 10MB desteklenir.",
+  
+  "footer_text": "Şap Hastalığı AI Teşhis Sistemi",
+  "footer_disclaimer": "Bu uygulama veteriner teşhis aracı değildir.",
+  "footer_version": "Sürüm",
+  
+  "lang_label": "Dil",
+  "lang_tr": "Türkçe",
+  "lang_en": "English",
+  "settings_title": "Sistem Ayarları",
+  "save": "Kaydet",
+  "cancel": "İptal",
+  
+  "class_names": {
+    "mouth_saliva": "Ağız Salya",
+    "mouth_sores": "Ağız Yaraları",
+    "nail_sores": "Tırnak Yaraları",
+    "head": "Baş",
+    "healthy_mouth": "Sağlıklı Ağız",
+    "healthy_nails": "Sağlıklı Tırnaklar"
+  }
+}

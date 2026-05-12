@@ -1,0 +1,57 @@
+/* ============================================================
+   App Layout Styles
+   ============================================================ */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+}
+
+/* Error toast */
+.error-toast {
+  position: fixed;
+  bottom: var(--space-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 900;
+  background: var(--color-danger);
+  color: white;
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  max-width: 90%;
+  text-align: center;
+  animation: fadeInUp 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.error-toast-close {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Analyze button area in upload */
+.analyze-area {
+  text-align: center;
+  padding: var(--space-xl) 0;
+  animation: fadeIn 0.3s ease;
+}

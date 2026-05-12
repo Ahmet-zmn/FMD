@@ -1,0 +1,78 @@
+{
+  "app_title": "FMD AI Diagnosis System",
+  "app_subtitle": "AI-Powered Cattle Lesion Detection",
+  "hero_description": "This system analyzes cattle images for Foot-and-Mouth Disease (FMD) symptoms using artificial intelligence. It automatically detects lesions in the mouth, hooves, and head regions, providing decision support for veterinarians.",
+  "hero_target": "Designed for veterinarians and farmers.",
+  
+  "upload_title": "Upload Image",
+  "upload_drag": "Drag and drop an image or click to select",
+  "upload_formats": "Supported formats: JPG, JPEG, PNG (Max. 10MB)",
+  "camera_title": "Camera Capture",
+  "camera_start": "Open Camera",
+  "camera_capture": "Take Photo",
+  "camera_retake": "Retake",
+  "camera_use": "Use This Photo",
+  "camera_stop": "Close Camera",
+  
+  "analyze_button": "Start Analysis",
+  "analyzing": "Analyzing...",
+  "analyzing_subtitle": "AI is examining the image, please wait...",
+  
+  "results_title": "Results",
+  "active_model": "Active Model",
+  "inference_time": "Inference Latency",
+  "original_image": "Original Image",
+  "annotated_image": "Annotated Image",
+  "findings_title": "Detected Findings",
+  "confidence_score": "Confidence Score",
+  "no_findings": "No findings detected",
+  "class_label": "Class",
+  "count_label": "Count",
+  "total_label": "Total",
+  "position_label": "Position",
+  
+  "summary_title": "Summary Assessment",
+  "interpretation_warning": "Suspicious Finding Detected",
+  "interpretation_healthy": "No Suspicious Findings",
+  "interpretation_inconclusive": "Result Inconclusive",
+  
+  "download_image": "Download Annotated Image",
+  "download_json": "Download JSON Report",
+  "download_pdf": "Download PDF Report",
+  
+  "new_analysis": "New Analysis",
+  "history_title": "Analysis History",
+  "history_empty": "No analysis performed yet",
+  "history_item": "Analysis",
+  
+  "demo_title": "Try with Example Images",
+  "demo_description": "Select one of the example images to test the system.",
+  
+  "caution_text": "⚠ WARNING: This system is for decision support only. Final diagnosis must be confirmed by a veterinarian.",
+  
+  "error_upload": "An error occurred while uploading the file.",
+  "error_inference": "An error occurred during analysis. Please try again.",
+  "error_network": "Could not connect to the server. Please check your connection.",
+  "error_file_type": "Unsupported file type. Please upload a JPG, JPEG, or PNG file.",
+  "error_file_size": "File size too large. Maximum 10MB is supported.",
+  
+  "footer_text": "FMD AI Diagnosis System",
+  "footer_disclaimer": "This application is not a veterinary diagnostic tool.",
+  "footer_version": "Version",
+  
+  "lang_label": "Language",
+  "lang_tr": "Türkçe",
+  "lang_en": "English",
+  "settings_title": "System Settings",
+  "save": "Save",
+  "cancel": "Cancel",
+  
+  "class_names": {
+    "mouth_saliva": "Mouth Saliva",
+    "mouth_sores": "Mouth Sores",
+    "nail_sores": "Nail Sores",
+    "head": "Head",
+    "healthy_mouth": "Healthy Mouth",
+    "healthy_nails": "Healthy Nails"
+  }
+}

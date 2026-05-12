@@ -1,0 +1,63 @@
+/* ============================================================
+   Camera Capture Styles
+   ============================================================ */
+
+.camera-section {
+  padding: var(--space-2xl) 0;
+  animation: fadeIn 0.5s ease;
+}
+
+.camera-section-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.camera-container {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.camera-video-wrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: #000;
+  margin-bottom: var(--space-lg);
+}
+
+.camera-video {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-lg);
+}
+
+.camera-canvas {
+  display: none;
+}
+
+.camera-preview {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 100%;
+  margin-bottom: var(--space-lg);
+}
+
+.camera-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.camera-error {
+  color: var(--color-danger);
+  background: var(--color-danger-50);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+}

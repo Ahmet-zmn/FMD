@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FMD AI Diagnosis - Quick Access</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --bg: #f8faf9;
+            --text: #2c3e50;
+            --white: #ffffff;
+            --error: #d32f2f;
+        }
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            text-align: center; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            padding: 60px 20px; 
+            line-height: 1.6;
+        }
+        .container { 
+            max-width: 650px; 
+            background: var(--white); 
+            margin: 0 auto; 
+            padding: 50px 40px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+        }
+        h1 { 
+            color: var(--primary); 
+            margin-top: 0;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            color: #64748b;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .status-online { background: #dcfce7; color: #166534; }
+        .status-offline { background: #fee2e2; color: #991b1b; }
+
+        .box { 
+            background: #f0fdf4; 
+            padding: 30px; 
+            border-radius: 12px; 
+            margin: 25px 0; 
+            border: 1px solid #dcfce7;
+        }
+        .url { 
+            font-size: 28px; 
+            font-weight: 700; 
+            color: var(--primary-dark); 
+            word-break: break-all; 
+            margin: 15px 0;
+            user-select: all;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .btn { 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 16px 32px; 
+            font-size: 16px; 
+            font-weight: 700;
+            border-radius: 8px; 
+            cursor: pointer; 
+            text-decoration: none; 
+            display: inline-block; 
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(46,125,50,0.2);
+        }
+        .btn:hover { 
+            background: var(--primary-dark); 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46,125,50,0.3);
+        }
+        .instructions { 
+            color: #475569; 
+            font-size: 14px; 
+            margin-top: 40px; 
+            text-align: left; 
+            background: #fff; 
+            padding: 25px; 
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            font-size: 16px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="status" class="status-badge">Checking System Status...</div>
+        <h1>🐄 FMD AI Quick Launch</h1>
+        <p class="subtitle">Use the address below to connect from your mobile device or tablet on the same network.</p>
+        
+        <div class="box">
+            <div class="url" id="ip-address">https://192.168.1.115:5173</div>
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 0;">
+                (The <b>https://</b> prefix is MANDATORY for camera access.)
+            </p>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="https://localhost:5173" class="btn" target="_blank">💻 Launch App on this PC</a>
+        </div>
+
+        <div class="instructions">
+            <h3>⚠️ Mobile Connection Guide:</h3>
+            <ol>
+                <li>Ensure both devices are on the same WiFi network.</li>
+                <li>Enter the green address above into your phone's browser.</li>
+                <li>If you see a <b>"Your connection is not private"</b> warning:
+                    <ul style="margin-top: 8px; padding-left: 20px;">
+                        <li>Click <b>Advanced</b>.</li>
+                        <li>Click <b>Proceed to site</b> (safe for local development).</li>
+                    </ul>
+                </li>
+            </ol>
+            <p style="margin-bottom: 0; margin-top: 15px; font-size: 13px;">
+                💡 <b>Tip:</b> If the app doesn't load, make sure you ran <code>QuickStart.bat</code> first.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Check if backend is alive
+        async function checkStatus() {
+            const badge = document.getElementById('status');
+            try {
+                const res = await fetch('http://localhost:8000/api/health', { mode: 'no-cors' });
+                // Note: no-cors will always return an opaque response, but it means the server is reachable
+                badge.innerText = '● System Online';
+                badge.className = 'status-badge status-online';
+            } catch (e) {
+                badge.innerText = '● System Offline';
+                badge.className = 'status-badge status-offline';
+            }
+        }
+        checkStatus();
+        setInterval(checkStatus, 5000);
+    </script>
+</body>
+</html>
+

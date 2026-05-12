@@ -1,0 +1,112 @@
+/* ============================================================
+   Upload Panel Styles
+   ============================================================ */
+
+.upload-section {
+  padding: var(--space-2xl) 0;
+  animation: fadeIn 0.5s ease;
+}
+
+.upload-section-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.upload-dropzone {
+  border: 2px dashed var(--color-primary-200);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3xl) var(--space-xl);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  background: var(--color-surface);
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-dropzone:hover,
+.upload-dropzone.drag-over {
+  border-color: var(--color-primary);
+  background: var(--color-primary-50);
+  box-shadow: var(--shadow-md);
+}
+
+.upload-dropzone.drag-over {
+  transform: scale(1.01);
+}
+
+.upload-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.upload-text {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.upload-formats {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.upload-input {
+  display: none;
+}
+
+/* Preview after file selected */
+.upload-preview {
+  margin-top: var(--space-xl);
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.upload-preview-image-container {
+  position: relative;
+  display: inline-block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  max-width: 100%;
+}
+
+.upload-preview-image {
+  max-height: 360px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+}
+
+.upload-preview-info {
+  margin-top: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.upload-preview-name {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.upload-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .upload-dropzone {
+    padding: var(--space-2xl) var(--space-md);
+  }
+}

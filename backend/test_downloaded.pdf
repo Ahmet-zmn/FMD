@@ -1,0 +1,27 @@
+{
+  "report": {
+    "title": "Şap Hastalığı AI Analiz Raporu / FMD AI Analysis Report",
+    "generated_at": "2026-04-14T20:57:29.902590",
+    "source_file": "test.png",
+    "disclaimer_tr": "Bu rapor yalnızca karar destek amaçlıdır. Kesin tanı için veteriner hekim değerlendirmesi gereklidir.",
+    "disclaimer_en": "This report is for decision support only. A veterinarian must confirm the final diagnosis."
+  },
+  "image_info": {
+    "original_size": {
+      "width": 100,
+      "height": 100
+    }
+  },
+  "summary": {
+    "total_detections": 0,
+    "class_counts": {},
+    "interpretation": {
+      "level": "inconclusive",
+      "message_tr": "Herhangi bir bulgu tespit edilemedi. Farklı bir görsel deneyiniz.",
+      "message_en": "No findings could be detected. Please try a different image.",
+      "suspicious_count": 0,
+      "healthy_count": 0
+    }
+  },
+  "detections": []
+}
