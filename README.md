@@ -5,8 +5,12 @@
 ![Backend](https://img.shields.io/badge/Backend-FastAPI-green)
 ![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61dafb)
 ![Docker](https://img.shields.io/badge/Docker-Supported-blue)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20171884.svg)](https://doi.org/10.5281/zenodo.20171884)
 
 A high-performance AI diagnostic platform for **Foot and Mouth Disease (FMD)** detection using advanced **Oriented Bounding Boxes (OBB)**. Supports image upload, camera capture, and **real-time video/camera stream analysis** with live alarm & cumulative statistics.
+
+### Detection Classes
+The models detect **6 classes**: `Mouth Saliva`, `Mouth Sores`, `Nail Sores`, `Head`, `Healthy Mouth`, `Healthy Nails`
 
 ---
 
@@ -61,19 +65,26 @@ npm install
 cd ..
 ```
 
-#### 4. Add Model Weights
+#### 4. Download Model Weights
 
-Place your trained weight files into the appropriate subdirectories under `weights/`:
+Download the pre-trained weights from **Zenodo**:
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20171884.svg)](https://doi.org/10.5281/zenodo.20171884)
+
+```bash
+# Download all weights at once:
+# Visit https://zenodo.org/records/20171884 and click "Download all"
+# Or download individual files and place them in the correct directories:
 ```
-weights/
-├── pt/          # PyTorch weights (.pt)
-├── onnx/        # ONNX weights (.onnx)
-├── engine/      # TensorRT engines (.engine)
-└── openvino/    # OpenVINO IR models (_openvino_model/)
-```
 
-> **Note:** At least one weight file is required. The system defaults to `weights/onnx/yolo11n.onnx`.
+| Format | Directory | Usage |
+|---|---|---|
+| `.pt` (PyTorch) | `weights/pt/` | Training, CPU & GPU inference |
+| `.onnx` (ONNX) | `weights/onnx/` | Cross-platform CPU & GPU inference |
+| `.engine` (TensorRT) | `weights/engine/` | Export locally: `yolo export model=weights/pt/yolo11n.pt format=engine` |
+| `.openvino` (OpenVINO) | `weights/openvino/` | Export locally: `yolo export model=weights/pt/yolo11n.pt format=openvino` |
+
+> **Note:** TensorRT (`.engine`) files are hardware-specific and must be exported on your own GPU. OpenVINO models can also be generated locally from `.pt` files.
 
 #### 5. Start the System
 

@@ -13,11 +13,12 @@ frontend/node_modules/
 frontend/dist/
 frontend/.env
 
-# AI Model Weight Files (Too large for GitHub)
+# AI Model Weight Files (Too large for GitHub — download from Zenodo)
 weights/pt/
 weights/onnx/
 weights/engine/
 weights/openvino/
+weights/*.zip
 
 # Keep models.json manifest
 !weights/models.json

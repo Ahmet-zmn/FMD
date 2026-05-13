@@ -5,8 +5,12 @@
 ![Backend](https://img.shields.io/badge/Backend-FastAPI-green)
 ![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61dafb)
 ![Docker](https://img.shields.io/badge/Docker-Destekleniyor-blue)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20171884.svg)](https://doi.org/10.5281/zenodo.20171884)
 
 **Şap Hastalığı (FMD)** tespiti için geliştirilmiş yüksek performanslı yapay zeka teşhis platformu. Gelişmiş **Eğik Sınırlayıcı Kutular (OBB)** kullanarak ağız ve tırnak lezyonlarını hassas bir şekilde tespit eder. Görüntü yükleme, kamera çekimi ve **gerçek zamanlı video/kamera akışı analizi** destekler.
+
+### Tespit Sınıfları
+Modeller **6 sınıfı** tespit eder: `Mouth Saliva`, `Mouth Sores`, `Nail Sores`, `Head`, `Healthy Mouth`, `Healthy Nails`
 
 ---
 
@@ -61,19 +65,26 @@ npm install
 cd ..
 ```
 
-#### 4. Model Ağırlıklarını Ekleyin
+#### 4. Model Ağırlıklarını İndirin
 
-Eğitilmiş ağırlık dosyalarınızı `weights/` altındaki ilgili klasörlere yerleştirin:
+Eğitilmiş ağırlıkları **Zenodo**'dan indirin:
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20171884.svg)](https://doi.org/10.5281/zenodo.20171884)
+
+```bash
+# Tüm ağırlıkları tek seferde indirmek için:
+# https://zenodo.org/records/20171884 adresine gidin ve "Download all" tıklayın
+# Veya dosyaları tek tek indirip doğru klasörlere yerleştirin:
 ```
-weights/
-├── pt/          # PyTorch ağırlıkları (.pt)
-├── onnx/        # ONNX ağırlıkları (.onnx)
-├── engine/      # TensorRT motorları (.engine)
-└── openvino/    # OpenVINO IR modelleri (_openvino_model/)
-```
 
-> **Not:** En az bir ağırlık dosyası gereklidir. Sistem varsayılan olarak `weights/onnx/yolo11n.onnx` dosyasını kullanır.
+| Format | Klasör | Kullanım |
+|---|---|---|
+| `.pt` (PyTorch) | `weights/pt/` | Eğitim, CPU & GPU çıkarım |
+| `.onnx` (ONNX) | `weights/onnx/` | Platformdan bağımsız CPU & GPU çıkarım |
+| `.engine` (TensorRT) | `weights/engine/` | Yerel dışa aktarım: `yolo export model=weights/pt/yolo11n.pt format=engine` |
+| `.openvino` (OpenVINO) | `weights/openvino/` | Yerel dışa aktarım: `yolo export model=weights/pt/yolo11n.pt format=openvino` |
+
+> **Not:** TensorRT (`.engine`) dosyaları donanıma özeldir ve kendi GPU'nuzda dışa aktarılmalıdır. OpenVINO modelleri de `.pt` dosyalarından yerel olarak üretilebilir.
 
 #### 5. Sistemi Başlatın
 
