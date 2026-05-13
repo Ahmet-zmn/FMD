@@ -39,7 +39,7 @@ Başlamadan önce aşağıdakilerin kurulu olduğundan emin olun:
 #### 1. Depoyu Klonlayın
 
 ```bash
-git clone https://github.com/<your-username>/FMD.git
+git clone https://github.com/Ahmet-zmn/FMD.git
 cd FMD
 ```
 

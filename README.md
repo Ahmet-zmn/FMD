@@ -39,7 +39,7 @@ Before starting, make sure you have:
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/FMD.git
+git clone https://github.com/Ahmet-zmn/FMD.git
 cd FMD
 ```
 
