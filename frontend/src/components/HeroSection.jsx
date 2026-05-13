@@ -1,7 +1,7 @@
 import { useI18n } from '../hooks/useI18n.jsx';
 import './HeroSection.css';
 
-export default function HeroSection({ onUploadClick, onCameraClick }) {
+export default function HeroSection({ onUploadClick, onCameraClick, onLiveClick }) {
   const { t } = useI18n();
 
   return (
@@ -12,6 +12,13 @@ export default function HeroSection({ onUploadClick, onCameraClick }) {
         <p className="hero-description">{t('hero_description')}</p>
         <p className="hero-target">{t('hero_target')}</p>
         <div className="hero-actions">
+          <button
+            className="btn btn-primary-gradient btn-lg"
+            onClick={onLiveClick}
+            id="hero-live-btn"
+          >
+            📡 Canlı Teşhis (Live)
+          </button>
           <button
             className="btn btn-primary btn-lg"
             onClick={onUploadClick}

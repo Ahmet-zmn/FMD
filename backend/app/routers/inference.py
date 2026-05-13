@@ -91,6 +91,31 @@ async def predict(file: UploadFile = File(...)):
     }
 
 
+@router.post("/predict/stream")
+async def predict_stream(file: UploadFile = File(...)):
+    """
+    Optimized endpoint for real-time video stream frames.
+    Skips report generation and storage for maximum performance.
+    """
+    if not model_service.is_loaded():
+        raise HTTPException(status_code=503, detail="Model not loaded")
+
+    content = await file.read()
+    
+    try:
+        # Run inference (no_annotation=True to speed up if supported)
+        result = model_service.predict(content)
+        
+        return {
+            "detections": result["detections"],
+            "inference_time_ms": result["inference_time_ms"],
+            "model_name": result["model_name"]
+        }
+    except Exception as e:
+        logger.error(f"Stream inference error: {e}")
+        raise HTTPException(status_code=500, detail="Stream failed")
+
+
 @router.get("/predict/{result_id}/image")
 async def get_annotated_image(result_id: str):
     """Download the annotated image."""

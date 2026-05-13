@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     # --- Model ---
     MODEL_PATH: str = str(Path(__file__).resolve().parent.parent.parent / "weights" / "onnx" / "yolo11n.onnx")
     DEFAULT_DEVICE: str = "cpu"
-    CONFIDENCE_THRESHOLD: float = 0.25
+    CONFIDENCE_THRESHOLD: float = 0.15
     IOU_THRESHOLD: float = 0.45
 
     # --- Upload ---

@@ -7,6 +7,7 @@
 :root {
   /* Primary palette — Forest green / earth tones */
   --color-primary: #2E7D32;
+  --color-primary-rgb: 46, 125, 50;
   --color-primary-light: #4CAF50;
   --color-primary-dark: #1B5E20;
   --color-primary-50: #E8F5E9;
@@ -172,6 +173,18 @@ a {
 
 .btn-primary:active:not(:disabled) {
   transform: translateY(0);
+}
+
+.btn-primary-gradient {
+  background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4);
+}
+
+.btn-primary-gradient:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.6);
 }
 
 .btn-secondary {

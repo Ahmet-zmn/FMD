@@ -10,3 +10,4 @@ reportlab==4.1.0
 onnxruntime-gpu==1.17.1
 torch==2.2.1
 torchvision==0.17.1
+pydantic-settings==2.2.1

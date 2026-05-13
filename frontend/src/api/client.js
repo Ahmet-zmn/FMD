@@ -27,6 +27,24 @@ export async function predictImage(file) {
 }
 
 /**
+ * Send a frame for real-time streaming analysis.
+ * @param {Blob} blob - The video frame as a blob
+ * @returns {Promise<Object>} Detection results
+ */
+export async function predictStream(blob) {
+  const formData = new FormData();
+  formData.append('file', blob, 'frame.jpg');
+
+  const response = await fetch(`${API_BASE}/predict/stream`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) throw new Error('Stream error');
+  return response.json();
+}
+
+/**
  * Get the URL for downloading an annotated image.
  */
 export function getAnnotatedImageUrl(resultId) {

@@ -13,6 +13,7 @@ import HistoryPanel from './components/HistoryPanel.jsx';
 import CautionBanner from './components/CautionBanner.jsx';
 import SettingsPanel from './components/SettingsPanel.jsx';
 import Footer from './components/Footer.jsx';
+import LiveDetectionPanel from './components/LiveDetectionPanel.jsx';
 import './App.css';
 
 /**
@@ -33,24 +34,46 @@ export default function App() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isLiveOpen, setIsLiveOpen] = useState(false);
   const [systemInfo, setSystemInfo] = useState(null);
+  const [liveResult, setLiveResult] = useState(null); // Yeni: Canli analiz sonucu
+
+  // Video Metrik Ayarları (Global)
+  const [displaySettings, setDisplaySettings] = useState({
+    showFrameId: true,
+    showAlarm: true,
+    showFrameCounts: true,
+    showCumulative: true,
+    showFPS: true
+  });
 
   const errorTimeout = useRef(null);
 
-  // Fetch system info on mount
+  // Fetch system info on mount (with retry)
   useEffect(() => {
+    let retryTimer;
     const fetchSystemInfo = async () => {
       try {
         const response = await fetch('/api/health');
         if (response.ok) {
           const data = await response.json();
           setSystemInfo(data.system_info);
+          
+          // If model is not loaded yet, keep checking until it is
+          if (!data.model_loaded) {
+            retryTimer = setTimeout(fetchSystemInfo, 2000);
+          }
+        } else {
+          // Backend might be starting up
+          retryTimer = setTimeout(fetchSystemInfo, 2000);
         }
       } catch (err) {
-        console.error('Failed to fetch system info:', err);
+        console.error('Failed to fetch system info, retrying...', err);
+        retryTimer = setTimeout(fetchSystemInfo, 3000);
       }
     };
     fetchSystemInfo();
+    return () => clearTimeout(retryTimer);
   }, []);
 
   // Show timed error toast
@@ -135,6 +158,26 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+  // Handle live session completion
+  const handleLiveFinish = useCallback((data) => {
+    setLiveResult(data); // Ana sayfada gosterilmek uzere kaydet
+    
+    addToHistory({
+      filename: `Canlı Analiz (${data.timestamp})`,
+      previewUrl: null,
+      totalDetections: data.mouthSores + data.nailSores,
+      level: (data.mouthSores + data.nailSores > 0) ? 'warning' : 'healthy',
+      isLive: true,
+      stats: data
+    });
+
+    // Sayfayi sonuca kaydir
+    setTimeout(() => {
+      const el = document.getElementById('live-result-summary');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  }, [addToHistory]);
+
   return (
     <div className="app">
       <Header onSettingsClick={() => setIsSettingsOpen(true)} />
@@ -149,7 +192,35 @@ export default function App() {
             <HeroSection
               onUploadClick={handleUploadClick}
               onCameraClick={handleCameraClick}
+              onLiveClick={() => setIsLiveOpen(true)}
             />
+            
+            {/* Canli Analiz Sonuc Özeti */}
+            {liveResult && (
+              <div className="container animate-fade-in-up" id="live-result-summary">
+                <div className="live-result-banner">
+                  <div className="live-result-info">
+                    <h3>📡 Son Canlı Analiz Raporu ({liveResult.timestamp})</h3>
+                    <div className="live-result-stats">
+                      <div className="live-stat-card">
+                        <label>Toplam Kare</label>
+                        <span>{liveResult.frameId}</span>
+                      </div>
+                      <div className="live-stat-card danger">
+                        <label>Ağız Yarası</label>
+                        <span>{liveResult.mouthSores}</span>
+                      </div>
+                      <div className="live-stat-card danger">
+                        <label>Tırnak Yarası</label>
+                        <span>{liveResult.nailSores}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button className="btn btn-secondary btn-sm" onClick={() => setLiveResult(null)}>Kapat / Temizle</button>
+                </div>
+              </div>
+            )}
+
             <div className="container">
               <CautionBanner />
             </div>
@@ -226,6 +297,15 @@ export default function App() {
       <SettingsPanel
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
+        displaySettings={displaySettings}
+        setDisplaySettings={setDisplaySettings}
+      />
+
+      <LiveDetectionPanel
+        isOpen={isLiveOpen}
+        onClose={() => setIsLiveOpen(false)}
+        displaySettings={displaySettings}
+        onFinish={handleLiveFinish}
       />
     </div>
   );

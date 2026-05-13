@@ -21,10 +21,11 @@ export default function Header({ onSettingsClick }) {
           <button 
             className="btn-settings" 
             onClick={onSettingsClick} 
-            aria-label="Ayarlar"
-            title="Ayarlar / Settings"
+            aria-label={t('settings_title') || "Sistem Ayarları"}
+            title={t('settings_title') || "Sistem Ayarları"}
           >
-            ⚙️
+            <span className="settings-icon">⚙️</span>
+            <span className="settings-text">{t('settings_title') || 'Sistem Ayarları'}</span>
           </button>
           
           <div className="lang-switcher" role="radiogroup" aria-label={t('lang_label')}>

@@ -17,64 +17,57 @@ class SettingsUpdate(BaseModel):
 
 @router.get("/available")
 async def get_available_settings():
-    """List available models and device capabilities."""
-    weights_dir = Path(__file__).resolve().parent.parent.parent.parent / "weights"
+    """List available models from models.json and check existence."""
+    import json
+    
+    # Yerel calisma (QuickStart.bat) icin yol ayari
+    project_root = Path(__file__).resolve().parent.parent.parent.parent
+    weights_dir = project_root / "weights"
+    config_path = weights_dir / "models.json"
+    
+    # Docker ortami kontrolu (opsiyonel fallback)
+    if not weights_dir.exists():
+        weights_dir = Path("/app/weights")
+        project_root = Path("/app")
+        config_path = weights_dir / "models.json"
     
     available_models = []
     
     # Check for TensorRT availability
     has_tensorrt = importlib.util.find_spec("tensorrt") is not None
-    
     # Check for OpenVINO availability
     has_openvino = importlib.util.find_spec("openvino") is not None
 
-    # Walk through weights directory to find supported model files
-    for root, dirs, files in os.walk(weights_dir):
-        # Check for files
-        for file in files:
-            # Safeguard: check for TensorRT if it's an .engine file
-            if file.endswith(".engine") and not has_tensorrt:
-                continue
-                
-            if file.endswith((".pt", ".onnx", ".engine")):
-                full_path = os.path.join(root, file)
-                rel_path = os.path.relpath(full_path, weights_dir.parent)
-                ext = file.split(".")[-1]
-                
-                # Determine supported devices
-                supported = ["cpu"]
-                if ext == "pt": supported = ["cpu", "cuda"]
-                elif ext == "onnx": supported = ["cpu", "cuda"]
-                elif ext == "engine": supported = ["cuda"]
-                
-                available_models.append({
-                    "name": file,
-                    "path": rel_path,
-                    "type": ext,
-                    "supported_devices": supported
-                })
-        
-        # Check for OpenVINO directories
-        for d in dirs:
-            if d.endswith("_openvino_model"):
-                # Safeguard: check for OpenVINO if it's an openvino model
-                if not has_openvino:
+    if config_path.exists():
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                models_config = json.load(f)
+            
+            for model in models_config:
+                # Safeguard: check for library support
+                if model.get("type") == "engine" and not has_tensorrt:
                     continue
-                    
-                full_path = os.path.join(root, d)
-                rel_path = os.path.relpath(full_path, weights_dir.parent)
-                available_models.append({
-                    "name": d.replace("_openvino_model", ""),
-                    "path": rel_path,
-                    "type": "openvino",
-                    "supported_devices": ["cpu"]
-                })
+                if model.get("type") == "openvino" and not has_openvino:
+                    continue
+                
+                # Check if model exists on disk
+                # Paths in models.json are relative to project root (e.g., "weights/pt/yolo11n.pt")
+                model_full_path = project_root / model["path"]
+                model["exists"] = model_full_path.exists()
+                
+                available_models.append(model)
+        except Exception as e:
+            print(f"Error reading models.json: {e}")
+            # Fallback to empty list or basic scan if needed
+    
+    # If models.json doesn't exist or is empty, we could fallback to the old scanning logic
+    # but the user explicitly asked for this file.
 
     # Check device availability
     devices = ["cpu"]
     if torch.cuda.is_available():
         devices.append("cuda")
-        # Add specific GPU indices if needed
+        # Add specific GPU indices
         for i in range(torch.cuda.device_count()):
             devices.append(f"cuda:{i}")
             
@@ -92,7 +85,10 @@ async def update_settings(update: SettingsUpdate):
     """Change the active model and device."""
     try:
         # Resolve path relative to the project root if it's not absolute
+        # Yerel calisma (QuickStart.bat) icin yol ayari
         project_root = Path(__file__).resolve().parent.parent.parent.parent
+        if not (project_root / "weights").exists():
+            project_root = Path("/app") # Docker fallback
         target_path = Path(update.model_path)
         
         if not target_path.is_absolute():

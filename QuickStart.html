@@ -1,173 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FMD AI Diagnosis - Quick Access</title>
+    <title>FMD AI Teşhis - Hızlı Erişim</title>
     <style>
-        :root {
-            --primary: #2e7d32;
-            --primary-dark: #1b5e20;
-            --bg: #f8faf9;
-            --text: #2c3e50;
-            --white: #ffffff;
-            --error: #d32f2f;
-        }
-        body { 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            text-align: center; 
-            background: var(--bg); 
-            color: var(--text); 
-            margin: 0; 
-            padding: 60px 20px; 
-            line-height: 1.6;
-        }
-        .container { 
-            max-width: 650px; 
-            background: var(--white); 
-            margin: 0 auto; 
-            padding: 50px 40px; 
-            border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
-        }
-        h1 { 
-            color: var(--primary); 
-            margin-top: 0;
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-        .subtitle {
-            color: #64748b;
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            background: #f1f5f9;
-            color: #475569;
-        }
-        .status-online { background: #dcfce7; color: #166534; }
-        .status-offline { background: #fee2e2; color: #991b1b; }
-
-        .box { 
-            background: #f0fdf4; 
-            padding: 30px; 
-            border-radius: 12px; 
-            margin: 25px 0; 
-            border: 1px solid #dcfce7;
-        }
-        .url { 
-            font-size: 28px; 
-            font-weight: 700; 
-            color: var(--primary-dark); 
-            word-break: break-all; 
-            margin: 15px 0;
-            user-select: all;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        .btn { 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            padding: 16px 32px; 
-            font-size: 16px; 
-            font-weight: 700;
-            border-radius: 8px; 
-            cursor: pointer; 
-            text-decoration: none; 
-            display: inline-block; 
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(46,125,50,0.2);
-        }
-        .btn:hover { 
-            background: var(--primary-dark); 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(46,125,50,0.3);
-        }
-        .instructions { 
-            color: #475569; 
-            font-size: 14px; 
-            margin-top: 40px; 
-            text-align: left; 
-            background: #fff; 
-            padding: 25px; 
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-        }
-        .instructions h3 {
-            margin-top: 0;
-            font-size: 16px;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        code {
-            background: #f1f5f9;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
+        :root { --primary: #2e7d32; --bg: #f8faf9; --text: #2c3e50; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background: var(--bg); color: var(--text); padding: 50px 20px; }
+        .container { max-width: 650px; background: white; margin: 0 auto; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        h1 { color: var(--primary); margin-bottom: 5px; }
+        .status-badge { display: inline-block; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 25px; }
+        .online { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .offline { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        
+        .info-box { background: #f0fdf4; padding: 30px; border-radius: 12px; margin: 25px 0; border: 2px solid #2e7d32; }
+        .ip-label { font-size: 14px; color: #1b5e20; margin-bottom: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .url { font-size: 32px; font-weight: 800; color: #1b5e20; word-break: break-all; margin: 10px 0; font-family: 'Consolas', monospace; }
+        
+        .btn { background: var(--primary); color: white; border: none; padding: 18px 40px; font-size: 16px; border-radius: 10px; cursor: pointer; text-decoration: none; display: inline-block; font-weight: bold; box-shadow: 0 4px 12px rgba(46,125,50,0.3); transition: all 0.2s; }
+        .btn:hover { transform: scale(1.02); background: #1b5e20; }
+        .copy-hint { font-size: 11px; color: #64748b; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="status" class="status-badge">Checking System Status...</div>
-        <h1>🐄 FMD AI Quick Launch</h1>
-        <p class="subtitle">Use the address below to connect from your mobile device or tablet on the same network.</p>
+        <div id="status" class="status-badge offline">SİSTEM BAĞLANTISI KONTROL EDİLİYOR...</div>
+        <h1>🐄 FMD AI Hızlı Erişim</h1>
+        <p style="color: #64748b; font-size: 15px;">Mobil cihazlardan bağlanmak için aşağıdaki adresi tarayıcınıza yazın:</p>
         
-        <div class="box">
-            <div class="url" id="ip-address">https://192.168.1.115:5173</div>
-            <p style="font-size: 13px; color: #64748b; margin-bottom: 0;">
-                (The <b>https://</b> prefix is MANDATORY for camera access.)
-            </p>
+        <div class="info-box">
+            <div class="ip-label">📱 MOBİL BAĞLANTI ADRESİ:</div>
+            <div class="url" id="ip-display">BEKLEYİNİZ...</div>
+            <div class="copy-hint">Bu adres, bilgisayarınızın o anki ağ adresine göre otomatik oluşturulur.</div>
         </div>
 
-        <div style="margin-top: 30px;">
-            <a href="https://localhost:5173" class="btn" target="_blank">💻 Launch App on this PC</a>
+        <div style="margin-top: 20px;">
+            <a href="https://localhost:5173" class="btn" target="_blank">💻 BU BİLGİSAYARDA AÇ</a>
         </div>
 
-        <div class="instructions">
-            <h3>⚠️ Mobile Connection Guide:</h3>
-            <ol>
-                <li>Ensure both devices are on the same WiFi network.</li>
-                <li>Enter the green address above into your phone's browser.</li>
-                <li>If you see a <b>"Your connection is not private"</b> warning:
-                    <ul style="margin-top: 8px; padding-left: 20px;">
-                        <li>Click <b>Advanced</b>.</li>
-                        <li>Click <b>Proceed to site</b> (safe for local development).</li>
-                    </ul>
-                </li>
-            </ol>
-            <p style="margin-bottom: 0; margin-top: 15px; font-size: 13px;">
-                💡 <b>Tip:</b> If the app doesn't load, make sure you ran <code>QuickStart.bat</code> first.
-            </p>
+        <div style="margin-top: 40px; text-align: left; font-size: 14px; color: #475569; background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;">
+            <b style="color: #2c3e50;">⚠️ Önemli Bağlantı Notları:</b><br>
+            <ul style="margin-top: 10px; padding-left: 20px;">
+                <li>Cihazlarınız aynı <b>WiFi</b> ağına bağlı olmalıdır.</li>
+                <li>Yukarıdaki adresi telefonunuzun tarayıcı çubuğuna (Chrome, Safari vb.) <b>tam olarak</b> yazın.</li>
+                <li>Bağlantı sırasında "Güvenli değil" uyarısı çıkarsa <b>Gelişmiş</b> seçeneğine basıp <b>Siteye Devam Et</b> deyin.</li>
+            </ul>
         </div>
     </div>
 
     <script>
-        // Check if backend is alive
-        async function checkStatus() {
+        const HEALTH_URL = 'http://localhost:8000/api/health';
+
+        async function updateStatus() {
             const badge = document.getElementById('status');
+            const ipDisplay = document.getElementById('ip-display');
+            
             try {
-                const res = await fetch('http://localhost:8000/api/health', { mode: 'no-cors' });
-                // Note: no-cors will always return an opaque response, but it means the server is reachable
-                badge.innerText = '● System Online';
-                badge.className = 'status-badge status-online';
+                // 1. Önce sunucunun orada olup olmadığını hızlıca kontrol et
+                const check = await fetch(HEALTH_URL, { mode: 'no-cors' });
+                
+                badge.innerText = '● SİSTEM ÇEVRİMİÇİ (ONLINE)';
+                badge.className = 'status-badge online';
+
+                // 2. Sunucudan gerçek IP bilgisini çek
+                const response = await fetch(HEALTH_URL);
+                const data = await response.json();
+                
+                if (data.lan_ip && data.lan_ip !== '127.0.0.1') {
+                    ipDisplay.innerText = `https://${data.lan_ip}:5173`;
+                } else {
+                    ipDisplay.innerText = `https://localhost:5173`;
+                }
             } catch (e) {
-                badge.innerText = '● System Offline';
-                badge.className = 'status-badge status-offline';
+                badge.innerText = '● SİSTEM ÇEVRİMDIŞI (OFFLINE)';
+                badge.className = 'status-badge offline';
+                ipDisplay.innerText = 'SERVİS KAPALI';
             }
         }
-        checkStatus();
-        setInterval(checkStatus, 5000);
+
+        // Her 3 saniyede bir durumu güncelle
+        setInterval(updateStatus, 3000);
+        updateStatus();
     </script>
 </body>
 </html>
-

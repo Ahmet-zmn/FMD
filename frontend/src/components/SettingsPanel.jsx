@@ -3,7 +3,7 @@ import { getAvailableSettings, updateSettings } from '../api/client';
 import { useI18n } from '../hooks/useI18n';
 import './SettingsPanel.css';
 
-export default function SettingsPanel({ isOpen, onClose }) {
+export default function SettingsPanel({ isOpen, onClose, displaySettings, setDisplaySettings }) {
   const { t } = useI18n();
   const [loading, setLoading] = useState(false);
   const [available, setAvailable] = useState({ models: [], devices: [], current: null });
@@ -100,13 +100,35 @@ export default function SettingsPanel({ isOpen, onClose }) {
               </div>
 
               <div className="settings-group">
-                <label htmlFor="model-select">Model Ağırlıkları (Weights)</label>
-                <select 
-                  id="model-select" 
-                  value={selectedModel} 
-                  onChange={(e) => setSelectedModel(e.target.value)}
-                  disabled={loading}
-                >
+                <label>Video Metrikleri (Canlı Teşhis)</label>
+                <div className="metrics-selector">
+                  <label className="metric-option">
+                    <input type="checkbox" checked={displaySettings.showFrameId} onChange={() => setDisplaySettings(s => ({...s, showFrameId: !s.showFrameId}))} />
+                    <span>Kare Sayısı (Frame ID)</span>
+                  </label>
+                  <label className="metric-option">
+                    <input type="checkbox" checked={displaySettings.showAlarm} onChange={() => setDisplaySettings(s => ({...s, showAlarm: !s.showAlarm}))} />
+                    <span>Alarm Durumu (On/Off)</span>
+                  </label>
+                  <label className="metric-option">
+                    <input type="checkbox" checked={displaySettings.showFrameCounts} onChange={() => setDisplaySettings(s => ({...s, showFrameCounts: !s.showFrameCounts}))} />
+                    <span>Anlık Tespit Sayıları</span>
+                  </label>
+                  <label className="metric-option">
+                    <input type="checkbox" checked={displaySettings.showCumulative} onChange={() => setDisplaySettings(s => ({...s, showCumulative: !s.showCumulative}))} />
+                    <span>Toplam (Birikimli) Sayılar</span>
+                  </label>
+                  <label className="metric-option">
+                    <input type="checkbox" checked={displaySettings.showFPS} onChange={() => setDisplaySettings(s => ({...s, showFPS: !s.showFPS}))} />
+                    <span>FPS ve Model Bilgisi</span>
+                  </label>
+                </div>
+                <p className="settings-hint">Canlı izleme ekranında hangi bilgilerin görüneceğini buradan seçebilirsiniz.</p>
+              </div>
+
+              <div className="settings-group">
+                <label>Model Ağırlıkları (Weights)</label>
+                <div className="model-list">
                   {available.models && available.models
                     .filter(model => {
                       if (!model.supported_devices) return true;
@@ -114,12 +136,36 @@ export default function SettingsPanel({ isOpen, onClose }) {
                       return model.supported_devices.includes(baseDevice);
                     })
                     .map((model) => (
-                      <option key={model.path} value={model.path}>
-                        [{model.type?.toUpperCase() || 'MOD'}] {model.name}
-                      </option>
+                      <div 
+                        key={model.path} 
+                        className={`model-item ${model.exists ? 'exists' : 'missing'} ${selectedModel === model.path ? 'selected' : ''}`}
+                        onClick={() => {
+                          if (model.exists) {
+                            setSelectedModel(model.path);
+                          } else {
+                            window.open(model.download_url, '_blank');
+                          }
+                        }}
+                      >
+                        <div className="model-info">
+                          <span className="model-type">[{model.type?.toUpperCase() || 'MOD'}]</span>
+                          <span className="model-name">{model.name}</span>
+                        </div>
+                        {!model.exists && (
+                          <div className="model-install-badge">
+                            Kur
+                          </div>
+                        )}
+                        {model.exists && selectedModel === model.path && (
+                          <span className="model-active-icon">✓</span>
+                        )}
+                      </div>
                     ))
                   }
-                </select>
+                </div>
+                <p className="settings-hint">
+                  <b>Kalın</b> yazılan modeller yüklüdür. Soluk olanları yanındaki 'Kur' butonu ile indirebilirsiniz.
+                </p>
                 <p className="settings-hint">Seçilen donanıma ( {selectedDevice.toUpperCase()} ) uygun modeller listelenmektedir.</p>
               </div>
 

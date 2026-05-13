@@ -109,12 +109,15 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
-  width: 40px;
+  padding: 0 var(--space-md);
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
   cursor: pointer;
   transition: all var(--transition-base);
   margin-right: var(--space-sm);
@@ -123,5 +126,30 @@
 .btn-settings:hover {
   background: var(--color-primary-50);
   border-color: var(--color-primary-200);
-  transform: rotate(30deg);
+  color: var(--color-primary-dark);
+}
+
+.btn-settings:hover .settings-icon {
+  transform: rotate(45deg);
+}
+
+.settings-icon {
+  font-size: 1.2rem;
+  transition: transform var(--transition-base);
+  display: flex;
+  align-items: center;
+}
+
+.settings-text {
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .settings-text {
+    display: none;
+  }
+  .btn-settings {
+    width: 40px;
+    padding: 0;
+  }
 }

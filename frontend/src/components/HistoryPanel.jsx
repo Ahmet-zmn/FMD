@@ -18,7 +18,7 @@ export default function HistoryPanel({ history, onSelect }) {
   };
 
   return (
-    <section className="history-section" id="history-section">
+    <section className="history-section" id="session-history">
       <div className="container">
         <div className="history-header">
           <h3 className="history-title">🕒 {t('history_title')}</h3>
@@ -28,24 +28,33 @@ export default function HistoryPanel({ history, onSelect }) {
           {history.map((item, idx) => (
             <div
               key={item.id}
-              className="history-item"
+              className={`history-item ${item.isLive ? 'live-session' : ''}`}
               onClick={() => onSelect(item)}
               role="button"
               tabIndex={0}
               id={`history-item-${idx}`}
             >
-              {item.previewUrl && (
+              {item.isLive ? (
+                <div className="history-thumb live-thumb">📡</div>
+              ) : item.previewUrl && (
                 <img src={item.previewUrl} alt="" className="history-thumb" />
               )}
+              
               <div className="history-info">
                 <div className="history-info-name">
-                  {t('history_item')} #{history.length - idx}
+                  {item.isLive ? 'Canlı Teşhis Analizi' : `${t('history_item')} #${history.length - idx}`}
                   {item.filename ? ` — ${item.filename}` : ''}
                 </div>
                 <div className="history-info-meta">
-                  <span>{formatTime(item.timestamp)}</span>
+                  <span>{item.isLive ? item.stats.timestamp : formatTime(item.timestamp)}</span>
                   <span>•</span>
-                  <span>{item.totalDetections || 0} {t('findings_title').toLowerCase()}</span>
+                  {item.isLive ? (
+                    <span className="live-details">
+                      Ağız: <b>{item.stats.mouthSores}</b> | Tırnak: <b>{item.stats.nailSores}</b>
+                    </span>
+                  ) : (
+                    <span>{item.totalDetections || 0} {t('findings_title').toLowerCase()}</span>
+                  )}
                 </div>
               </div>
               <div
