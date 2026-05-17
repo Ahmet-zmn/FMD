@@ -1,5 +1,5 @@
 @echo off
-setlocal enabledelayedexpansion
+setlocal
 
 echo ============================================================
 echo   FMD AI Diagnosis System - Automated Launcher ^& Setup
@@ -43,34 +43,34 @@ if %ERRORLEVEL% neq 0 (
 )
 
 :: 3. Install backend dependencies globally if not installed
-if not exist "backend\.installed" (
-    echo [*] Installing backend dependencies to global Python...
-    echo [*] Python kutuphaneleri sisteme kuruluyor (requirements.txt)...
-    echo [*] Bu islem internet hiziniz ve donaniminiza bagli olarak 1-2 dakika surebilir...
-    python -m pip install -r backend\requirements.txt
-    if !ERRORLEVEL! neq 0 (
-        echo [ERROR] Failed to install Python dependencies.
-        echo [HATA] Python kutuphaneleri kurulurken hata olustu.
-        pause
-        exit /b 1
-    )
-    echo. > backend\.installed
-    echo [*] Python dependencies installed successfully.
+if exist "backend\.installed" goto :skip_backend_install
+echo [*] Installing backend dependencies to global Python...
+echo [*] Python kutuphaneleri sisteme kuruluyor (requirements.txt)...
+echo [*] Bu islem internet hiziniz ve donaniminiza bagli olarak 1-2 dakika surebilir...
+python -m pip install -r backend\requirements.txt
+if %ERRORLEVEL% neq 0 (
+    echo [ERROR] Failed to install Python dependencies.
+    echo [HATA] Python kutuphaneleri kurulurken hata olustu.
+    pause
+    exit /b 1
 )
+echo. > backend\.installed
+echo [*] Python dependencies installed successfully.
+:skip_backend_install
 
 :: 4. Install frontend dependencies (node_modules)
-if not exist "frontend\node_modules" (
-    echo [*] Frontend dependencies (node_modules) not found. Installing...
-    echo [*] Frontend paketleri kuruluyor (npm install)...
-    cd frontend
-    call npm install
-    if !ERRORLEVEL! neq 0 (
-        echo [WARNING] Failed to install frontend dependencies.
-        echo [UYARI] Frontend paketleri kurulurken hata olustu.
-    )
-    cd ..
-    echo [*] Frontend dependencies installed successfully.
+if exist "frontend\node_modules" goto :skip_frontend_install
+echo [*] Frontend dependencies (node_modules) not found. Installing...
+echo [*] Frontend paketleri kuruluyor (npm install)...
+cd frontend
+call npm install
+if %ERRORLEVEL% neq 0 (
+    echo [WARNING] Failed to install frontend dependencies.
+    echo [UYARI] Frontend paketleri kurulurken hata olustu.
 )
+cd ..
+echo [*] Frontend dependencies installed successfully.
+:skip_frontend_install
 
 :: If setup-only, exit here
 if %SETUP_ONLY%==1 (
