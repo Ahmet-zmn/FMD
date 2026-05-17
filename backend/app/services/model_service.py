@@ -44,8 +44,42 @@ class ModelService:
 
         target_path = Path(self.model_path)
         if not target_path.exists():
-            logger.error(f"Model file not found at: {target_path}")
-            raise FileNotFoundError(f"Model file not found at: {target_path}")
+            model_name = target_path.name
+            # Map model filenames to their direct Zenodo download URLs
+            ZENODO_MAPPING = {
+                "yolo11n.onnx": "https://zenodo.org/records/20171884/files/yolo11n.onnx?download=1",
+                "yolo11s.onnx": "https://zenodo.org/records/20171884/files/yolo11s.onnx?download=1",
+                "yolo11m.onnx": "https://zenodo.org/records/20171884/files/yolo11m.onnx?download=1",
+                "yolo11l.onnx": "https://zenodo.org/records/20171884/files/yolo11l.onnx?download=1",
+                "yolo26n.onnx": "https://zenodo.org/records/20171884/files/yolo26n.onnx?download=1",
+                "yolo26s.onnx": "https://zenodo.org/records/20171884/files/yolo26s.onnx?download=1",
+                "yolo26m.onnx": "https://zenodo.org/records/20171884/files/yolo26m.onnx?download=1",
+                "yolo26l.onnx": "https://zenodo.org/records/20171884/files/yolo26l.onnx?download=1",
+                "yolo11n.pt": "https://zenodo.org/records/20171884/files/yolo11n.pt?download=1",
+                "yolo11s.pt": "https://zenodo.org/records/20171884/files/yolo11s.pt?download=1",
+                "yolo11m.pt": "https://zenodo.org/records/20171884/files/yolo11m.pt?download=1",
+                "yolo11l.pt": "https://zenodo.org/records/20171884/files/yolo11l.pt?download=1",
+                "yolo26n.pt": "https://zenodo.org/records/20171884/files/yolo26n.pt?download=1",
+                "yolo26s.pt": "https://zenodo.org/records/20171884/files/yolo26s.pt?download=1",
+                "yolo26m.pt": "https://zenodo.org/records/20171884/files/yolo26m.pt?download=1",
+                "yolo26l.pt": "https://zenodo.org/records/20171884/files/yolo26l.pt?download=1"
+            }
+            
+            if model_name in ZENODO_MAPPING:
+                logger.info(f"Model file missing. Automatically downloading {model_name} from Zenodo...")
+                download_url = ZENODO_MAPPING[model_name]
+                try:
+                    import urllib.request
+                    target_path.parent.mkdir(parents=True, exist_ok=True)
+                    logger.info(f"Downloading from: {download_url} to: {target_path}")
+                    urllib.request.urlretrieve(download_url, str(target_path))
+                    logger.info(f"Successfully downloaded {model_name} directly to {target_path.parent}!")
+                except Exception as e:
+                    logger.error(f"Failed to automatically download model from Zenodo: {e}")
+                    raise FileNotFoundError(f"Model file not found at: {target_path} and automated download failed: {e}")
+            else:
+                logger.error(f"Model file not found at: {target_path}")
+                raise FileNotFoundError(f"Model file not found at: {target_path}")
 
         logger.info(f"Loading YOLO model from: {target_path} on device: {self.device}")
         
