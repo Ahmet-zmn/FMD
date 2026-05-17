@@ -2,6 +2,7 @@
 
 # Python
 backend/venv/
+backend/.installed
 **/__pycache__/
 *.pyc
 backend/.env

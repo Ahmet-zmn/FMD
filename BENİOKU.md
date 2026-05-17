@@ -38,7 +38,24 @@ Başlamadan önce aşağıdakilerin kurulu olduğundan emin olun:
 2. **Node.js 18+** ve npm
 3. **Git** (depoyu klonlamak için)
 
-### Adım Adım Kurulum
+---
+
+### 💻 Windows Kullanıcıları (Tam Otomatik Kurulum - En Kolay Yol)
+
+Eğer Windows işletim sistemi kullanıyorsanız, sistem kurulumu **%100 otomatiktir**! Manuel olarak hiçbir komut satırı çalıştırmanıza gerek yoktur:
+
+1. **Depoyu Klonlayın:**
+   ```bash
+   git clone https://github.com/Ahmet-zmn/FMD.git
+   cd FMD
+   ```
+2. **Model Ağırlıklarını İndirin** (Aşağıdaki 4. Adıma bakın).
+3. **`QuickStart.bat`** (veya **`StartSystem.vbs`**) dosyasına çift tıklayın.
+   - *İlk çalıştırmada, sistem otomatik olarak bilgisayarda Python kurulu olup olmadığını kontrol edecek, gerekli tüm backend kütüphanelerini doğrudan sisteminizin genel Python ortamına kuracak ve frontend paketleri için `npm install` komutunu çalıştıracaktır. Sizin hiçbir şey yapmanıza gerek kalmaz!*
+
+---
+
+### 🐧 macOS / Linux Kullanıcıları (Manuel Adım Adım Kurulum)
 
 #### 1. Depoyu Klonlayın
 
@@ -51,9 +68,7 @@ cd FMD
 
 ```bash
 cd backend
-python -m venv venv
-.\venv\Scripts\activate        # Windows
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 cd ..
 ```
 
@@ -88,15 +103,31 @@ Eğitilmiş ağırlıkları **Zenodo**'dan indirin:
 
 #### 5. Sistemi Başlatın
 
-Başlatmak için **iki seçenek** vardır:
+Windows üzerinde başlatmak için **iki seçenek** vardır:
 
 **Seçenek A — Sessiz Arka Plan Modu (Günlük kullanım için önerilir):**
 
-**`StartSystem.vbs`** dosyasına çift tıklayın. Backend ve frontend gizli pencerelerde başlatılır ve kontrol paneli otomatik olarak açılır. Hiçbir konsol penceresi görünmez.
+**`StartSystem.vbs`** dosyasına çift tıklayın. Backend ve frontend gizli pencerelerde başlatılır ve kontrol paneli otomatik olarak açılır. Hiçbir konsol penceresi görünmez. (Eğer ilk çalıştırma ise, önce otomatik kurulum penceresi açılacaktır).
 
 **Seçenek B — Hata Ayıklama Modu (Konsol çıktısını gösterir):**
 
-**`QuickStart.bat`** dosyasına çift tıklayın. Her iki servis için de konsol penceresi açılır, böylece logları ve hata çıktılarını görebilirsiniz.
+**`QuickStart.bat`** dosyasına çift tıklayın. Her iki servis için de konsol penceresi açılır, böylece logları ve hata çıktılarını görebilirsiniz. (Eğer ilk çalıştırma ise, önce otomatik kurulum penceresi açılacaktır).
+
+**macOS / Linux Üzerinde:**
+
+Backend'i başlatmak için bir terminal sekmesi açın:
+```bash
+cd backend
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+Frontend'i başlatmak için başka bir terminal sekmesi açın:
+```bash
+cd frontend
+npm run dev
+```
+
+Tarayıcınızdan `QuickStart.html` dosyasını açın.
 
 #### 6. Kontrol Panelini Açın
 

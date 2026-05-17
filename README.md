@@ -38,7 +38,24 @@ Before starting, make sure you have:
 2. **Node.js 18+** and npm installed
 3. **Git** (to clone the repository)
 
-### Step-by-Step Setup
+---
+
+### 💻 Windows Users (Fully Automated Setup - Easiest)
+
+If you are on Windows, the system setup is **100% automated**! You do not need to run commands manually:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/Ahmet-zmn/FMD.git
+   cd FMD
+   ```
+2. **Download Model Weights** (See Step 4 below).
+3. **Double-click `QuickStart.bat`** (or **`StartSystem.vbs`**).
+   - *On the very first launch, the scripts will automatically check for Python, install all backend dependencies directly to your system's global Python environment, and run `npm install` for frontend packages. No manual command execution needed!*
+
+---
+
+### 🐧 macOS / Linux Users (Manual Step-by-Step Setup)
 
 #### 1. Clone the Repository
 
@@ -51,9 +68,7 @@ cd FMD
 
 ```bash
 cd backend
-python -m venv venv
-.\venv\Scripts\activate        # Windows
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 cd ..
 ```
 
@@ -88,15 +103,31 @@ Download the pre-trained weights from **Zenodo**:
 
 #### 5. Start the System
 
-You have **two options** to start:
+You have **two options** to start on Windows:
 
 **Option A — Silent Background Mode (Recommended for daily use):**
 
-Double-click **`StartSystem.vbs`**. This starts both backend and frontend in hidden windows and opens the dashboard automatically. No console windows will appear.
+Double-click **`StartSystem.vbs`**. This starts both backend and frontend in hidden windows and opens the dashboard automatically. No console windows will appear. (If this is the first launch, it will run the automated setup window first).
 
 **Option B — Debug Mode (Shows console output):**
 
-Double-click **`QuickStart.bat`**. This opens console windows for both services so you can see logs and debug output.
+Double-click **`QuickStart.bat`**. This opens console windows for both services so you can see logs and debug output. (If this is the first launch, it will run the automated setup first).
+
+**On macOS / Linux:**
+
+Start the backend in one terminal tab:
+```bash
+cd backend
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+Start the frontend in another terminal tab:
+```bash
+cd frontend
+npm run dev
+```
+
+Open `QuickStart.html` in your browser.
 
 #### 6. Open the Dashboard
 

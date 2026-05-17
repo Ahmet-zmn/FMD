@@ -20,8 +20,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 @app.post("/start")
 async def start_system():
     try:
-        # baslat.bat dosyasını yeni bir pencerede çalıştır
-        subprocess.Popen(["cmd", "/c", "baslat.bat"], cwd=str(PROJECT_ROOT), creationflags=subprocess.CREATE_NEW_CONSOLE)
+        # QuickStart.bat dosyasını yeni bir pencerede çalıştır
+        subprocess.Popen(["cmd", "/c", "QuickStart.bat"], cwd=str(PROJECT_ROOT), creationflags=subprocess.CREATE_NEW_CONSOLE)
         return {"status": "success", "message": "Sistem başlatılıyor..."}
     except Exception as e:
         return {"status": "error", "message": str(e)}
