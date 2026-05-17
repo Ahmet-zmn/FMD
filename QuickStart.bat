@@ -12,6 +12,13 @@ if "%1"=="/setup" set SETUP_ONLY=1
 if "%1"=="--setup" set SETUP_ONLY=1
 if "%1"=="-setup" set SETUP_ONLY=1
 
+:: Create weights subdirectories if they don't exist
+if not exist "weights" mkdir "weights"
+if not exist "weights\pt" mkdir "weights\pt"
+if not exist "weights\onnx" mkdir "weights\onnx"
+if not exist "weights\engine" mkdir "weights\engine"
+if not exist "weights\openvino" mkdir "weights\openvino"
+
 :: 1. Check Python installation
 python --version >nul 2>&1
 if %ERRORLEVEL% neq 0 (

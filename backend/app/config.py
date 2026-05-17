@@ -56,3 +56,8 @@ settings = Settings()
 
 # Ensure results directory exists
 os.makedirs(settings.RESULTS_DIR, exist_ok=True)
+
+# Ensure weights directories exist
+WEIGHTS_DIR = Path(__file__).resolve().parent.parent.parent / "weights"
+for fmt in ["pt", "onnx", "engine", "openvino"]:
+    os.makedirs(WEIGHTS_DIR / fmt, exist_ok=True)
