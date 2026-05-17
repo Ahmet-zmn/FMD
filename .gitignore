@@ -35,7 +35,7 @@ test/*.avi
 Thumbs.db
 
 # Docker
-.dockerignore
+# Keep .dockerignore tracked
 
 # Environment
 .env
